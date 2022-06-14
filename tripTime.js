@@ -1,155 +1,177 @@
+// // const tripTime = (arr) => {
+// //   let result = {
+// //     avgSpeedLimits: [],
+// //     segmentTimes: [],
+// //     totalTime: null,
+// //   };
+// //   for (let i = 0; i < arr.length; i++) {
+// //     var part = 0;
+// //     for (let j = 0; j < arr[i].speedLimits.length; j++) {
+// //       part += arr[i].speedLimits[j].speedLimit;
+// //     }
+// //     result.avgSpeedLimits.push(part / arr[i].speedLimits.length);
+// //   }
+// //   for (let i = 0; i < arr.length; i++) {
+// //     var part = 0;
+// //     for (let j = 0; j < arr[i].speedLimits.length; j++) {
+// //       part += arr[i].speedLimits[j].speedLimit / arr[i].speedLimits[j].distance;
+// //     }
+// //     result.segmentTimes.push(Math.round(part));
+// //   }
+// //    result.totalTime = 0
+// //   for (let i = 0; i < result.segmentTimes.length; i++) {
+// //     result.totalTime += result.segmentTimes[i]
+// //   }
+// //   return result;
+// // };
+
 // const tripTime = (arr) => {
 //   let result = {
 //     avgSpeedLimits: [],
 //     segmentTimes: [],
 //     totalTime: null,
 //   };
-//   for (let i = 0; i < arr.length; i++) {
-//     var part = 0;
-//     for (let j = 0; j < arr[i].speedLimits.length; j++) {
-//       part += arr[i].speedLimits[j].speedLimit;
-//     }
-//     result.avgSpeedLimits.push(part / arr[i].speedLimits.length);
-//   }
-//   for (let i = 0; i < arr.length; i++) {
-//     var part = 0;
-//     for (let j = 0; j < arr[i].speedLimits.length; j++) {
-//       part += arr[i].speedLimits[j].speedLimit / arr[i].speedLimits[j].distance;
-//     }
-//     result.segmentTimes.push(Math.round(part));
-//   }
-//    result.totalTime = 0
-//   for (let i = 0; i < result.segmentTimes.length; i++) {
-//     result.totalTime += result.segmentTimes[i]
-//   }
+
+//   let totalTime = arr.reduce((acc, curr) => {
+//     let segmentDistance = curr.speedLimits.reduce((speedAcc, obj) => {
+//       return (speedAcc += obj.distance);
+//     }, 0);
+
+//     let avgSpeedLimit = 0;
+//     let segmentTime = 0;
+
+//     curr.speedLimits.forEach((obj) => {
+//       avgSpeedLimit += Math.round(
+//         obj.speedLimit * (obj.distance / segmentDistance)
+//       );
+//       let objTime =
+//         Math.round((obj.distance * (obj.speedLimit / 60)) / 60) + obj.traffic;
+//       segmentTime += objTime;
+//     });
+
+//     segmentTime = Math.round(segmentTime);
+//     result.segmentTimes.push(segmentTime);
+//     acc += segmentTime;
+
+//     result.avgSpeedLimits.push(avgSpeedLimit);
+//     return acc;
+//   }, 0);
+// /* */
+//   result.totalTime = totalTime;
+
 //   return result;
 // };
 
-const tripTime = (arr) => {
-  let result = {
-    avgSpeedLimits: [],
-    segmentTimes: [],
-    totalTime: null,
-  };
+// // UNCOMMENT THE FUNCTION CALL AT
+// // THE BOTTOM BEFORE RUNNING THE FILE
 
-  let totalTime = arr.reduce((acc, curr) => {
-    let segmentDistance = curr.speedLimits.reduce((speedAcc, obj) => {
-      return (speedAcc += obj.distance);
-    }, 0);
+// const stops = [
+//   {
+//     name: `Gus's Gas`,
+//     speedLimits: [
+//       {
+//         distance: 5,
+//         speedLimit: 45,
+//       },
+//       {
+//         distance: 97,
+//         speedLimit: 65,
+//       },
+//       {
+//         distance: 72,
+//         speedLimit: 70,
+//       },
+//       {
+//         distance: 25,
+//         speedLimit: 50,
+//       },
+//     ],
+//     traffic: 12,
+//   },
+//   {
+//     name: `Halle's House of Pancakes`,
+//     speedLimits: [
+//       {
+//         distance: 36,
+//         speedLimit: 50,
+//       },
+//       {
+//         distance: 141,
+//         speedLimit: 75,
+//       },
+//     ],
+//     traffic: 0,
+//   },
+//   {
+//     name: `Jake's Great Shakes`,
+//     speedLimits: [
+//       {
+//         distance: 100,
+//         speedLimit: 75,
+//       },
+//       {
+//         distance: 84,
+//         speedLimit: 70,
+//       },
+//       {
+//         distance: 20,
+//         speedLimit: 75,
+//       },
+//     ],
+//     traffic: 30,
+//   },
+//   {
+//     name: `Luna's Lunch Counter`,
+//     speedLimits: [
+//       {
+//         distance: 3,
+//         speedLimit: 35,
+//       },
+//       {
+//         distance: 5,
+//         speedLimit: 45,
+//       },
+//       {
+//         distance: 20,
+//         speedLimit: 65,
+//       },
+//       {
+//         distance: 85,
+//         speedLimit: 75,
+//       },
+//       {
+//         distance: 3,
+//         speedLimit: 65,
+//       },
+//       {
+//         distance: 5,
+//         speedLimit: 55,
+//       },
+//     ],
+//     traffic: 7,
+//   },
+// ];
 
-    let avgSpeedLimit = 0;
-    let segmentTime = 0;
+const easter22 = new Date("April 17, 2022");
 
-    curr.speedLimits.forEach((obj) => {
-      avgSpeedLimit += Math.round(
-        obj.speedLimit * (obj.distance / segmentDistance)
-      );
-      let objTime =
-        Math.round((obj.distance * (obj.speedLimit / 60)) / 60) + obj.traffic;
-      segmentTime += objTime;
-    });
-
-    segmentTime = Math.round(segmentTime);
-    result.segmentTimes.push(segmentTime);
-    acc += segmentTime;
-
-    result.avgSpeedLimits.push(avgSpeedLimit);
-    return acc;
-  }, 0);
-
-  result.totalTime = totalTime;
-
-  return result;
+// console.log(tripTime(stops));
+Date.prototype.addDays = function (days) {
+  //
+  var date = new Date(this.valueOf());
+  //
+  date.setDate(date.getDate() + days);
+  //
+  return date;
 };
 
-// UNCOMMENT THE FUNCTION CALL AT
-// THE BOTTOM BEFORE RUNNING THE FILE
+var date = new Date();
 
-const stops = [
-  {
-    name: `Gus's Gas`,
-    speedLimits: [
-      {
-        distance: 5,
-        speedLimit: 45,
-      },
-      {
-        distance: 97,
-        speedLimit: 65,
-      },
-      {
-        distance: 72,
-        speedLimit: 70,
-      },
-      {
-        distance: 25,
-        speedLimit: 50,
-      },
-    ],
-    traffic: 12,
-  },
-  {
-    name: `Halle's House of Pancakes`,
-    speedLimits: [
-      {
-        distance: 36,
-        speedLimit: 50,
-      },
-      {
-        distance: 141,
-        speedLimit: 75,
-      },
-    ],
-    traffic: 0,
-  },
-  {
-    name: `Jake's Great Shakes`,
-    speedLimits: [
-      {
-        distance: 100,
-        speedLimit: 75,
-      },
-      {
-        distance: 84,
-        speedLimit: 70,
-      },
-      {
-        distance: 20,
-        speedLimit: 75,
-      },
-    ],
-    traffic: 30,
-  },
-  {
-    name: `Luna's Lunch Counter`,
-    speedLimits: [
-      {
-        distance: 3,
-        speedLimit: 35,
-      },
-      {
-        distance: 5,
-        speedLimit: 45,
-      },
-      {
-        distance: 20,
-        speedLimit: 65,
-      },
-      {
-        distance: 85,
-        speedLimit: 75,
-      },
-      {
-        distance: 3,
-        speedLimit: 65,
-      },
-      {
-        distance: 5,
-        speedLimit: 55,
-      },
-    ],
-    traffic: 7,
-  },
-];
+const getLent = (easter) => {
+  let ashWedDate = easter.addDays(-46);
+  let string = String(ashWedDate);
+  return `This year Ash Wednesday is on ${string}`;
+};
 
-console.log(tripTime(stops));
+console.log(getLent(easter22));
+
+// console.log(date.addDays(-40), date1.addDays(-46), `should be 2022-03-02`);
